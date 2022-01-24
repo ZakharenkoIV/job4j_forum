@@ -1,5 +1,8 @@
 package ru.job4j.forum.model;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Objects;
@@ -11,8 +14,14 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull
+    @Column(unique = true)
     private String name;
+
     private String description;
+
+    @NotNull
     private Calendar created;
 
     public static Post of(String name) {

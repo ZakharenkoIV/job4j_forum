@@ -2,17 +2,15 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.User;
-import ru.job4j.forum.repository.mem.UserMem;
-
-import java.util.List;
+import ru.job4j.forum.repository.data.UserRepository;
 
 @Service
 public class UserService {
 
-    private final UserMem userStore = new UserMem();
+    private final UserRepository userStore;
 
-    public List<User> getAllPosts() {
-        return userStore.getAllUsers();
+    public UserService(UserRepository userStore) {
+        this.userStore = userStore;
     }
 
     public User saveUser(User user) {

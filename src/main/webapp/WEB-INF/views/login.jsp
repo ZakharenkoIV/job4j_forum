@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,6 +15,7 @@
 
     <title>Login</title>
 </head>
+<jsp:include page="/WEB-INF/views/header.jsp"/>
 <body>
 <h3 class="text-center my-5">Вход в систему</h3>
 <div class="container mt-5">

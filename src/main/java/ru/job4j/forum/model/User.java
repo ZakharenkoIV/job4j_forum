@@ -1,12 +1,26 @@
 package ru.job4j.forum.model;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull
+    @Column(unique = true)
     private String username;
+
+    @NotNull
     private String password;
+
+    @Column(nullable = false, columnDefinition = "true")
     private boolean enabled;
 
     public static User of(String name, String pass) {

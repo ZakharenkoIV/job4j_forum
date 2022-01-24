@@ -5,18 +5,25 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
     <title>Registration</title>
 </head>
+<jsp:include page="/WEB-INF/views/header.jsp"/>
 <body>
 <h3 class="text-center my-5">Регистрация</h3>
 <div class="container mt-3">
+    <c:if test="${not empty errorMessage}">
+        <div style="color:red; font-weight: bold; margin: 30px 0px;">
+                ${errorMessage}
+        </div>
+    </c:if>
     <form name='reg' action="<c:url value='/reg'/>" method='POST'>
         <div class="mb-3">
             <label for="inputName" class="form-label">Имя:</label>
@@ -26,6 +33,7 @@
             <label for="inputPass" class="form-label">Пароль:</label>
             <input type="password" name="password" class="form-control" id="inputPass">
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>
 </div>
