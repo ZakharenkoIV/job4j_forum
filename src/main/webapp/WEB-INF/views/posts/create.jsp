@@ -13,30 +13,28 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
-    <title>Post edit</title>
+    <title>Create Post</title>
 </head>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <body>
 <div class="container mt-3">
     <div class="row">
-        <h4 class="text-center">Редактирование темы</h4>
+        <h4 class="text-center">Новая тема</h4>
     </div>
     <div class="card-body">
         <form action="<c:url value='/posts/save'/>" method="post">
             <div class="form-group">
-                <input type="hidden" name="id" value="${post.id}"/>
                 <div class="mb-3">
                     <label for="postName" class="form-label"> Название темы: </label>
-                    <input id="postName" type="text" class="form-control" name="name" value="${post.name}">
+                    <input id="postName" type="text" class="form-control" name="name">
                 </div>
                 <div class="mb-3">
                     <label for="postDescription" class="form-label"> Описание: </label>
-                    <input id="postDescription" type="text" class="form-control" name="description"
-                           value="${post.description}">
+                    <input id="postDescription" type="text" class="form-control" name="description">
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Опубликовать</button>
         </form>
     </div>
 </div>

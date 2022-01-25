@@ -1,6 +1,7 @@
 package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.forum.model.User;
 import ru.job4j.forum.repository.data.UserRepository;
 
@@ -13,7 +14,12 @@ public class UserService {
         this.userStore = userStore;
     }
 
-    public User saveUser(User user) {
-        return userStore.save(user);
+    @Transactional
+    public void save(User user) {
+        userStore.save(user);
+    }
+
+    public User getUserByName(String name) {
+        return userStore.findUserByName(name);
     }
 }

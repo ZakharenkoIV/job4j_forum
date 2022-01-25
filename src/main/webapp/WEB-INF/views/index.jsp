@@ -19,19 +19,45 @@
 <body>
 <div class="container mt-3">
     <div class="row">
-        <h4>Форум job4j</h4>
+        <h4 class="text-center">Форум job4j</h4>
     </div>
     <div class="row">
+        <div class="text-end">
+            <form action="<c:url value="/posts/create"/>" method="get">
+                <button type="submit">Добавить тему</button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+        </div>
+
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">Тема</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${posts}" var="post">
                 <tr>
-                    <td><c:out value="${post.name}"/></td>
+                    <td>
+                        <a href="<c:url value="/posts/${post.id}"/>">
+                            <c:out value="${post.name}"/>
+                        </a>
+                    </td>
+                    <td width=125px>
+                        <c:if test="${userId == post.user.id || isAdmin}">
+                            <button title="Редактировать">
+                                <a href="<c:url value="/posts/${post.id}/edit"/>">
+                                    <img src="<c:url value="/image/edit.svg"/>" alt="">
+                                </a>
+                            </button>
+                            <button title="Удалить">
+                                <a href="<c:url value="/posts/${post.id}/delete"/>">
+                                    <img src="<c:url value="/image/x.svg"/>" alt="">
+                                </a>
+                            </button>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

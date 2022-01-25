@@ -6,7 +6,12 @@
 <header class="card-header row">
     <c:if test="${authUser != null}">
         <div class="mx-3">
-            ${authUser}
+            <a href="<c:url value="/"/>" class="text-decoration-none text-reset" title="На главную">
+<%--                <button type="button" class="btn bg-transparent" title="На главную">--%>
+                    <img src="<c:url value="/image/home.svg"/>" alt="">
+<%--                </button>--%>
+            </a>
+                ${authUser}
             |
             <a href="<c:url value="/logout"/>">Выход</a>
         </div>

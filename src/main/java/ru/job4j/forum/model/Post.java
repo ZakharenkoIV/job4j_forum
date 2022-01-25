@@ -1,7 +1,6 @@
 package ru.job4j.forum.model;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -23,6 +22,11 @@ public class Post {
 
     @NotNull
     private Calendar created;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public static Post of(String name) {
         Post post = new Post();
@@ -60,6 +64,14 @@ public class Post {
 
     public void setCreated(Calendar created) {
         this.created = created;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

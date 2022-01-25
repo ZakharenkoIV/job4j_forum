@@ -26,7 +26,7 @@ public class RegControl {
     public String regSave(@ModelAttribute User user) {
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
-        users.saveUser(user);
+        users.save(user);
         return "redirect:/login";
     }
 
