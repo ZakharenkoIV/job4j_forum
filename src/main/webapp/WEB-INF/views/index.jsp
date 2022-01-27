@@ -19,7 +19,7 @@
 <body>
 <div class="container mt-3">
     <div class="row">
-        <h4 class="text-center">Форум job4j</h4>
+        <h4 class="text-center mt-3 mb-5">Форум job4j</h4>
     </div>
     <div class="row">
         <div class="text-end">
@@ -41,7 +41,7 @@
                 <tr>
                     <td>
                         <a href="<c:url value="/posts/${post.id}"/>">
-                            <c:out value="${post.name}"/>
+                            <c:out value="${post.topic}"/>
                         </a>
                     </td>
                     <td width=125px>

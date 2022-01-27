@@ -24,14 +24,18 @@ values ('root', true, '$2a$10$urJWkobn79fnJOenqM2c8OmFXQ17DfDzo809gmFuWOD7soE1Px
 
 create table posts
 (
-    id          serial primary key,
-    name        varchar(2000)               not null,
-    description text,
-    created     timestamp without time zone not null default now(),
-    user_id     int references users (id)   not null
+    id                serial primary key,
+    topic             varchar(2000)               not null,
+    comment           text,
+    created           timestamp without time zone not null default now(),
+    order_of_addition int                         not null,
+    user_id           int references users (id)   not null
 );
 
-insert into posts (name, user_id)
-values ('О чем этот форум?', 1);
-insert into posts (name, user_id)
-values ('Правила форума.', 1);
+ALTER TABLE posts
+    ADD CONSTRAINT UQ_TOPIC_ORDER UNIQUE (topic, order_of_addition);
+
+insert into posts (topic, user_id, order_of_addition)
+values ('О чем этот форум?', 1, 1);
+insert into posts (topic, user_id, order_of_addition)
+values ('Правила форума.', 1, 1);

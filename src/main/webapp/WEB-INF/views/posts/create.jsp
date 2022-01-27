@@ -26,15 +26,20 @@
             <div class="form-group">
                 <div class="mb-3">
                     <label for="postName" class="form-label"> Название темы: </label>
-                    <input id="postName" type="text" class="form-control" name="name">
-                </div>
-                <div class="mb-3">
-                    <label for="postDescription" class="form-label"> Описание: </label>
-                    <input id="postDescription" type="text" class="form-control" name="description">
+                    <input id="postName" type="text" class="form-control" name="topic" placeholder="Краткое название темы">
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-primary">Опубликовать</button>
+            <div class="form-group">
+                <label for="formMessage"> Описание: </label>
+                <textarea class="form-control" id="formMessage" rows="3" name="comment"
+                          placeholder="Напишите подробнее суть обсуждаемой темы"></textarea>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button class="mt-3" type="submit">Опубликовать</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

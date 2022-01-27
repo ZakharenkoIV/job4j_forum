@@ -18,7 +18,7 @@ public class PostMem {
         idCount = new AtomicInteger(1);
         postStore = new ArrayList<>();
         Post post = Post.of("Продаю машину ладу 01.");
-        post.setDescription("Машина новая");
+        post.setComment("Машина новая");
         post.setCreated(Calendar.getInstance());
         this.save(post);
     }

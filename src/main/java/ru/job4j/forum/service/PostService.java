@@ -18,8 +18,12 @@ public class PostService {
         this.postStore = postStore;
     }
 
-    public List<Post> getAllPosts() {
-        return postStore.getAllPosts();
+    public List<Post> getAllFirstPosts() {
+        return postStore.getAllFirstPosts();
+    }
+
+    public List<Post> getPostsByTopic(String topic) {
+        return postStore.getPostsByTopic(topic);
     }
 
     public Optional<Post> getPostById(String postId) {
@@ -31,15 +35,15 @@ public class PostService {
         Post saved;
         if (post.getId() == 0) {
             post.setCreated(Calendar.getInstance());
-            saved = postStore.save(post);
+            saved = postStore.save(post.getTopic(), post.getComment(), post.getUser().getId());
         } else {
-            postStore.update(post.getName(), post.getDescription(), post.getId());
+            postStore.update(post.getTopic(), post.getComment(), post.getId());
             saved = post;
         }
         return saved;
     }
 
-    public void deleteById(String postId) {
-        postStore.deleteById(Integer.parseInt(postId));
+    public int deleteById(String postId) {
+        return postStore.deleteByIdWithReturningMinOrderByTopic(Integer.parseInt(postId));
     }
 }

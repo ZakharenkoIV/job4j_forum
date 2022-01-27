@@ -34,7 +34,7 @@
             <input type="password" name="password" class="form-control" id="inputPass">
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <button type="submit">Зарегистрироваться</button>
     </form>
 </div>
 

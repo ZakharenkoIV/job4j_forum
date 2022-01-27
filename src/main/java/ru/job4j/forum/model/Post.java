@@ -15,13 +15,17 @@ public class Post {
     private int id;
 
     @NotNull
-    @Column(unique = true)
-    private String name;
+    private String topic;
 
-    private String description;
+    @NotNull
+    private String comment;
 
     @NotNull
     private Calendar created;
+
+    @NotNull
+    @Column(name = "order_of_addition")
+    private int orderOfAddition;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,7 +34,7 @@ public class Post {
 
     public static Post of(String name) {
         Post post = new Post();
-        post.name = name;
+        post.topic = name;
         return post;
     }
 
@@ -42,20 +46,28 @@ public class Post {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTopic(String name) {
+        this.topic = name;
     }
 
-    public String getDescription() {
-        return description;
+    public int getOrderOfAddition() {
+        return orderOfAddition;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setOrderOfAddition(int orderOfAddition) {
+        this.orderOfAddition = orderOfAddition;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String description) {
+        this.comment = description;
     }
 
     public Calendar getCreated() {
@@ -84,13 +96,13 @@ public class Post {
         }
         Post post = (Post) o;
         return id == post.id
-                && Objects.equals(name, post.name)
-                && Objects.equals(description, post.description)
+                && Objects.equals(topic, post.topic)
+                && Objects.equals(comment, post.comment)
                 && Objects.equals(created, post.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, created);
+        return Objects.hash(id, topic, comment, created);
     }
 }

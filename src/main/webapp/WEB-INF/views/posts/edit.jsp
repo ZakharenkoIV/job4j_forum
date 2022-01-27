@@ -19,24 +19,26 @@
 <body>
 <div class="container mt-3">
     <div class="row">
-        <h4 class="text-center">Редактирование темы</h4>
+        <h4 class="text-center">Редактирование комментария</h4>
+        <h5 class="text-center">${post.topic}</h5>
     </div>
     <div class="card-body">
         <form action="<c:url value='/posts/save'/>" method="post">
+            <input type="hidden" name="id" value="${post.id}"/>
+            <input type="hidden" name="topic" value="${post.topic}"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-group">
-                <input type="hidden" name="id" value="${post.id}"/>
-                <div class="mb-3">
-                    <label for="postName" class="form-label"> Название темы: </label>
-                    <input id="postName" type="text" class="form-control" name="name" value="${post.name}">
-                </div>
-                <div class="mb-3">
-                    <label for="postDescription" class="form-label"> Описание: </label>
-                    <input id="postDescription" type="text" class="form-control" name="description"
-                           value="${post.description}">
+                <label for="formMessage"> Комментарий: </label>
+                <textarea class="form-control" id="formMessage" rows="3" name="comment"
+                          placeholder="Напишите ваш комментарий">
+                    ${post.comment}
+                </textarea>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button class="mt-3" type="submit">Сохранить</button>
                 </div>
             </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
     </div>
 </div>

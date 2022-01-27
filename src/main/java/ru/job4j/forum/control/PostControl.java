@@ -12,6 +12,8 @@ import ru.job4j.forum.model.Post;
 import ru.job4j.forum.service.PostService;
 import ru.job4j.forum.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -37,10 +39,16 @@ public class PostControl {
     }
 
     @GetMapping("/posts/{postId}")
-    public String getPostPageByPostId(@PathVariable(value = "postId") String postId, Model model) {
+    public String getPostPageByPostId(@PathVariable(value = "postId") String postId,
+                                      Model model,
+                                      HttpServletRequest request) {
         model.addAttribute("authUser", this.getAuthorizedUserName());
-        Optional<Post> post = posts.getPostById(postId);
-        model.addAttribute("post", post.orElse(new Post()));
+        Post post = posts.getPostById(postId).orElse(new Post());
+        List<Post> topicPosts = posts.getPostsByTopic(post.getTopic());
+        model.addAttribute("topic", post.getTopic());
+        model.addAttribute("posts", topicPosts);
+        model.addAttribute("userId", users.getUserByName(getAuthorizedUserName()).getId());
+        model.addAttribute("isAdmin", request.isUserInRole("ROLE_ADMIN"));
         return "/posts/post";
     }
 
@@ -59,10 +67,14 @@ public class PostControl {
     }
 
     @GetMapping("/posts/{postId}/delete")
-    public String postDelete(Model model, @PathVariable String postId) {
+    public String postDelete(Model model, @PathVariable String postId, HttpServletRequest request) {
         model.addAttribute("authUser", this.getAuthorizedUserName());
-        posts.deleteById(postId);
-        return "redirect:/posts/";
+        int i = posts.deleteById(postId);
+        if (postId.equals(String.valueOf(i))) {
+            return "redirect:/posts/";
+        } else {
+            return "redirect:/posts/" + i;
+        }
     }
 
     private String getAuthorizedUserName() {

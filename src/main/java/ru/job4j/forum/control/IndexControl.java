@@ -27,8 +27,8 @@ public class IndexControl {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("authUser", user.getUsername());
         model.addAttribute("userId", users.getUserByName(user.getUsername()).getId());
-        model.addAttribute("posts", posts.getAllPosts());
         model.addAttribute("isAdmin", request.isUserInRole("ROLE_ADMIN"));
+        model.addAttribute("posts", posts.getAllFirstPosts());
         return "index";
     }
 }

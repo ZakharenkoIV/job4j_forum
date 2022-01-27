@@ -13,32 +13,57 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
 
-    <title>${post.name}</title>
+    <title>${topic}</title>
 </head>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <body>
 <div class="container mt-3">
     <div class="row">
-        <h4 class="text-center">${post.name}</h4>
+        <h4 class="text-center mt-3 mb-5">${topic}</h4>
     </div>
-    <table>
-        <tr>
-            <td class="row2" valign="top" width="99%">
-                <div><span>Дата публикации: ${post.created.getTime()}
-                    <br>Сообщение #1 </span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div>
-                    <i><span style="font-size:14pt;line-height:100%">
-                        ${post.description}
-                    </span></i>
-                </div>
-            </td>
-        </tr>
-    </table>
+
+    <c:forEach items="${posts}" var="post">
+        <div>
+            <i><span style="font-size:14pt;line-height:100%"> ${post.comment} </span></i>
+        </div>
+        <div class="mt-3"><span style="font-size:10pt; line-height: 0.9em;">
+            <p><small> Дата публикации: ${post.created.getTime()}<br>
+            Сообщение #${post.orderOfAddition}<br>
+            От ${post.user.username}</small></p> </span>
+        </div>
+        <div class="row justify-content-end">
+            <div class="col-1">
+                <c:if test="${userId == post.user.id || isAdmin}">
+                    <button title="Редактировать">
+                        <a href="<c:url value="/posts/${post.id}/edit"/>">
+                            <img src="<c:url value="/image/edit.svg"/>" alt="">
+                        </a>
+                    </button>
+                    <button title="Удалить">
+                        <a href="<c:url value="/posts/${post.id}/delete"/>">
+                            <img src="<c:url value="/image/x.svg"/>" alt="">
+                        </a>
+                    </button>
+                </c:if>
+            </div>
+        </div>
+        <hr class="mt-3 mb-3"/>
+    </c:forEach>
+
+    <form name='message' action="<c:url value='/posts/save'/>" method='POST'>
+        <div class="form-group">
+            <label for="formMessage"></label>
+            <textarea class="form-control" id="formMessage" rows="3" name="comment"
+                      placeholder="Напишите ваш комментарий"></textarea>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button class="mt-3" type="submit">Опубликовать</button>
+            </div>
+        </div>
+        <input type="hidden" name="topic" value="${topic}"/>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
 </div>
 </body>
 </html>
