@@ -32,8 +32,8 @@
             От ${post.user.username}</small></p> </span>
         </div>
         <div class="row justify-content-end">
-            <div class="col-1">
-                <c:if test="${userId == post.user.id || isAdmin}">
+            <c:if test="${userId == post.user.id || isAdmin}">
+                <div class="col-auto">
                     <button title="Редактировать">
                         <a href="<c:url value="/posts/${post.id}/edit"/>">
                             <img src="<c:url value="/image/edit.svg"/>" alt="">
@@ -44,8 +44,8 @@
                             <img src="<c:url value="/image/x.svg"/>" alt="">
                         </a>
                     </button>
-                </c:if>
-            </div>
+                </div>
+            </c:if>
         </div>
         <hr class="mt-3 mb-3"/>
     </c:forEach>

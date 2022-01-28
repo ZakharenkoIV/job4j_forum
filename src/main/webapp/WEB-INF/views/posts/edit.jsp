@@ -30,9 +30,7 @@
             <div class="form-group">
                 <label for="formMessage"> Комментарий: </label>
                 <textarea class="form-control" id="formMessage" rows="3" name="comment"
-                          placeholder="Напишите ваш комментарий">
-                    ${post.comment}
-                </textarea>
+                          placeholder="Напишите ваш комментарий">${post.comment}</textarea>
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
