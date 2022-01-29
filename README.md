@@ -17,20 +17,28 @@
 
 Доступ ко всем страницам, кроме регистрации и авторизации, неавторизованным пользователям запрещён.
 
+----------------
 index.jsp - главная страница - список тем.
 ![ScreenShot](images/Home_page.png)
 
-reg.jsp - регистрация пользователя.
-![ScreenShot](images/Reg_page.png)
-
-login.jsp - авторизация пользователя.
-![ScreenShot](images/Login_page.png)
-
-edit.jsp - редактирование темы.
-![ScreenShot](images/Post_edit_page.png)
-
+----------------
 post.jsp - тема и обсуждения.
 ![ScreenShot](images/Post_page.png)
 
+----------------
 create.jsp - создание темы.
 ![ScreenShot](images/Post_create_page.png)
+
+----------------
+edit.jsp - редактирование темы.
+![ScreenShot](images/Post_edit_page.png)
+
+----------------
+reg.jsp - регистрация пользователя.
+![ScreenShot](images/Reg_page.png)
+
+----------------
+login.jsp - авторизация пользователя.
+![ScreenShot](images/Login_page.png)
+
+----------------
