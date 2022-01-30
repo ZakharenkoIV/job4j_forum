@@ -1,4 +1,4 @@
-package ru.job4j.forum.control;
+package ru.job4j.forum.ut.control;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.forum.Main;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -20,7 +21,6 @@ public class LoginControlTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username = "Joker")
     public void whenIncorrectLoginDataWhenErrorMessage() throws Exception {
         this.mockMvc.perform(get("/login").param("error", "true"))
                 .andDo(print())
@@ -31,7 +31,6 @@ public class LoginControlTest {
     }
 
     @Test
-    @WithMockUser(username = "Joker")
     public void whenLoggedOffWhenLogoutMessage() throws Exception {
         this.mockMvc.perform(get("/login").param("logout", "true"))
                 .andDo(print())
@@ -42,7 +41,7 @@ public class LoginControlTest {
     }
 
     @Test
-    @WithMockUser(username = "Joker")
+    @WithMockUser
     public void whenLogoutThenRedirectToLoginWithLogoutMessage() throws Exception {
         this.mockMvc.perform(get("/logout"))
                 .andDo(print())

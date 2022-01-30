@@ -1,4 +1,4 @@
-package ru.job4j.forum.control;
+package ru.job4j.forum.ut.control;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,7 +10,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.job4j.forum.Main;
 import ru.job4j.forum.model.Post;
+import ru.job4j.forum.model.User;
 import ru.job4j.forum.service.PostService;
+import ru.job4j.forum.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,27 +32,38 @@ public class PostControlTest {
     @MockBean
     private PostService posts;
 
+    @MockBean
+    private UserService users;
+
     @Test
-    @WithMockUser(username = "Joker")
+    @WithMockUser
     public void whenUserEntersThePostPage() throws Exception {
-        List<Post> topicPosts = List.of(Post.of("from Joker"));
+        List<Post> topicPosts = List.of(Post.of("from user"));
         Mockito.when(posts.getPostsByTopic(anyString())).thenReturn(topicPosts);
         Mockito.when(posts.getPostById(anyString()))
                 .thenReturn(Optional.of(topicPosts.get(0)));
+        Mockito.when(users.getUserByName(anyString()))
+                .thenReturn(User.of(7));
         this.mockMvc.perform(get("/posts/{postId}", 1))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("authUser", "Joker"))
-                .andExpect(model().attribute("topic", "from Joker"))
+                .andExpect(model().attribute("authUser", "user"))
+                .andExpect(model().attribute("topic", "from user"))
                 .andExpect(model().attribute("posts", topicPosts))
-                .andExpect(model().attribute("userId", 6))
+                .andExpect(model().attribute("userId", 7))
                 .andExpect(model().attribute("isAdmin", false))
                 .andExpect(view().name("/posts/post"));
     }
 
     @Test
-    @WithMockUser(username = "root", roles = {"ADMIN"})
+    @WithMockUser(roles = {"ADMIN"})
     public void whenAdminEntersThePostPage() throws Exception {
+        List<Post> topicPosts = List.of(Post.of("from ADMIN"));
+        Mockito.when(posts.getPostsByTopic(anyString())).thenReturn(topicPosts);
+        Mockito.when(posts.getPostById(anyString()))
+                .thenReturn(Optional.of(topicPosts.get(0)));
+        Mockito.when(users.getUserByName(anyString()))
+                .thenReturn(User.of(7));
         this.mockMvc.perform(get("/posts/{postId}", 1))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -65,5 +78,4 @@ public class PostControlTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
     }
-
 }
