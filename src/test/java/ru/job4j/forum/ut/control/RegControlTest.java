@@ -1,4 +1,4 @@
-package ru.job4j.forum.control;
+package ru.job4j.forum.ut.control;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

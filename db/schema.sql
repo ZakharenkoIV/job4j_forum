@@ -1,15 +1,10 @@
-CREATE TABLE authorities
+CREATE TABLE if not exists authorities
 (
     id        serial primary key,
     authority VARCHAR(50) NOT NULL unique
 );
 
-insert into authorities (authority)
-values ('ROLE_USER');
-insert into authorities (authority)
-values ('ROLE_ADMIN');
-
-CREATE TABLE users
+CREATE TABLE if not exists users
 (
     id           serial primary key,
     username     VARCHAR(50)       NOT NULL unique,
@@ -18,11 +13,7 @@ CREATE TABLE users
     authority_id int     default 1 not null references authorities (id)
 );
 
-insert into users (username, enabled, password, authority_id)
-values ('root', true, '$2a$10$urJWkobn79fnJOenqM2c8OmFXQ17DfDzo809gmFuWOD7soE1Px5G2',
-        (select id from authorities where authority = 'ROLE_ADMIN'));
-
-create table posts
+create table if not exists posts
 (
     id                serial primary key,
     topic             varchar(2000)               not null,
@@ -32,10 +23,8 @@ create table posts
     user_id           int references users (id)   not null
 );
 
+ALTER TABLE posts DROP CONSTRAINT IF EXISTS UQ_TOPIC_ORDER;
+
 ALTER TABLE posts
     ADD CONSTRAINT UQ_TOPIC_ORDER UNIQUE (topic, order_of_addition);
 
-insert into posts (topic, user_id, order_of_addition)
-values ('О чем этот форум?', 1, 1);
-insert into posts (topic, user_id, order_of_addition)
-values ('Правила форума.', 1, 1);

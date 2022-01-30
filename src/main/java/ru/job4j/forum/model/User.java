@@ -21,11 +21,16 @@ public class User {
     @NotNull
     private String password;
 
-    @Column(nullable = false, columnDefinition = "true")
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean enabled;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "authority_id")
+    private Authority authority;
 
     public static User of(int id) {
         User user = new User();
