@@ -16,14 +16,15 @@ CREATE TABLE if not exists users
 create table if not exists posts
 (
     id                serial primary key,
-    topic             varchar(2000)               not null,
+    topic             varchar(2000)                             not null,
     comment           text,
-    created           timestamp without time zone not null default now(),
-    order_of_addition int                         not null,
-    user_id           int references users (id)   not null
+    created           timestamp without time zone default now() not null,
+    order_of_addition int                                       not null,
+    user_id           int                                       not null references users (id)
 );
 
-ALTER TABLE posts DROP CONSTRAINT IF EXISTS UQ_TOPIC_ORDER;
+ALTER TABLE posts
+    DROP CONSTRAINT IF EXISTS UQ_TOPIC_ORDER;
 
 ALTER TABLE posts
     ADD CONSTRAINT UQ_TOPIC_ORDER UNIQUE (topic, order_of_addition);
