@@ -1,6 +1,8 @@
 package ru.job4j.forum.ut.control;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,8 +19,11 @@ import ru.job4j.forum.service.UserService;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -77,5 +82,23 @@ public class PostControlTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    @WithMockUser
+    public void shouldReturnDefaultMessage() throws Exception {
+        Mockito.when(users.getUserByName(anyString()))
+                .thenReturn(User.of("testName", "testPass"));
+        ArgumentCaptor<Post> argument = ArgumentCaptor.forClass(Post.class);
+        Post testPost = new Post();
+        testPost.setId(1);
+        Mockito.when(posts.saveOrUpdate(argument.capture())).thenReturn(testPost);
+        this.mockMvc.perform(post("/posts/save")
+                .param("id", "1")
+                .param("topic", "Куплю хлам. Дорого."))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+        verify(posts).saveOrUpdate(argument.capture());
+        MatcherAssert.assertThat(argument.getValue().getTopic(), is("Куплю хлам. Дорого."));
     }
 }
