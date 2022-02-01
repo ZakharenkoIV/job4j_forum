@@ -86,6 +86,14 @@ public class User {
         this.posts = posts;
     }
 
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

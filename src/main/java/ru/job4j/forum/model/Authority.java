@@ -31,4 +31,10 @@ public class Authority {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
+
+    public static Authority of(int id) {
+        Authority authority = new Authority();
+        authority.setId(id);
+        return authority;
+    }
 }
