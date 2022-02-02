@@ -30,7 +30,8 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     @Query("UPDATE Post p SET p.topic =?1, p.comment =?2 WHERE p.id =?3")
     void update(String topic, String comment, int postId);
 
-    @Query(value = "with oldPostTopic as(select topic from forum.public.posts where id = ?1), "
+    @Query(value = "with oldPostTopic as("
+            + "select topic from forum.public.posts where id = ?1), "
             + " minTopicId as(select min(id) from forum.public.posts "
             + "where topic like (select * from oldPostTopic)) "
             + "DELETE FROM forum.public.posts as p "
