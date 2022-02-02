@@ -15,8 +15,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     @Query("select distinct p FROM Post p left join fetch p.user WHERE p.topic =?1")
     List<Post> getPostsByTopic(String topic);
 
-    @Query(value = "WITH count AS ("
-            + "select max(order_of_addition)"
+    @Query(value = "WITH count AS (select max(order_of_addition)"
             + "from forum.public.posts "
             + "where topic like ?1)"
             + "insert into forum.public.posts (topic, comment, user_id, order_of_addition)"
